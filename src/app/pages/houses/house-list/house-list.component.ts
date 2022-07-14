@@ -1,17 +1,18 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { first, map, Observable, mergeMap, tap, switchMap, filter } from 'rxjs';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { map, Observable, filter } from 'rxjs';
 import { House } from '../house.model';
 import { HouseService } from '../house.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { ActivatedRoute, ActivationEnd, ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-house-list',
   templateUrl: './house-list.component.html',
-  styleUrls: ['./house-list.component.scss']
+  styleUrls: ['./house-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HouseListComponent implements OnInit, OnDestroy{
+export class HouseListComponent {
   dataSource: HouseDataSource
   displayedColumns = ['name', 'address', 'costPerMonth', 'deposit', 'mq', 'dateCreated']
   showEditComponent$!: Observable<boolean>
@@ -22,44 +23,30 @@ export class HouseListComponent implements OnInit, OnDestroy{
   @ViewChild('input')
   filterInput!: ElementRef;
 
-
-  constructor(private houseService: HouseService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private houseService: HouseService,
+    route: ActivatedRoute,
+    private router: Router
+  ) {
     this.dataSource = new HouseDataSource(houseService.getFilteredStream(), this.paginator)
 
     //https://stackoverflow.com/questions/48977775/activatedroute-subscribe-to-first-child-parameters-observer
     this.showEditComponent$ = this.router.events
       .pipe(
-        filter((event) => {
-
-          console.log(event)
-          if(event instanceof ActivationEnd) {
-            return event.snapshot.firstChild !== null
-          } else {
-            return false
-          }
-        }),
-        map((activationEnd) => {
-          console.log(activationEnd)
-          // the element firstChild will ne always not null cause of the filter
-          if((activationEnd as ActivationEnd).snapshot.firstChild?.paramMap.get('id')) {
+        filter((event) => event instanceof NavigationEnd),
+        map(() => route),
+        map((activeRoute) => {
+          if(activeRoute.snapshot.firstChild && activeRoute.snapshot.firstChild.paramMap.get('id') !== null) {
             return true
           } else {
             return false
           }
         })
       )
-
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-
   }
 
   onChangeFilter() {
-    this.houseService.filterInput$.next(this.filterInput.nativeElement.value)
+    this.houseService.filter(this.filterInput.nativeElement.value)
   }
 }
 

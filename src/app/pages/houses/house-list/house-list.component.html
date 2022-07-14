@@ -8,9 +8,10 @@
           <h2>Houses</h2>
         </div>
         <div class="col-12 col-lg-auto">
-          <mat-form-field hintLabel="search all fields" color="accent">
-            <mat-label>Filter</mat-label>
-            <input matInput #input placeholder="Search" type="search" (input)="onChangeFilter()">
+          <mat-form-field hintLabel="search in all fields" >
+            <mat-label>Search</mat-label>
+            <input matInput #input type="search" (input)="onChangeFilter()">
+            <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-9 pt-3 w-100">

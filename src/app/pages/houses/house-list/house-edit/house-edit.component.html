@@ -3,35 +3,80 @@
     <h2>Edit</h2>
   </div>
   <div class="col-12">
-    <form >
-      <mat-form-field class="example-full-width" class="w-100 pt-2">
-        <mat-label>URL</mat-label>
-        <input matInput value="">
-      </mat-form-field>
-      <mat-form-field class="example-full-width "  class="w-100 pt-2">
+    <form [formGroup]="editForm">
+
+      <!-- URL -->
+      <div class="position-relative" style="padding-bottom: 35px;">
+        <mat-form-field class="w-100 pt-2">
+          <mat-label>URL</mat-label>
+          <input matInput formControlName="url" id="url" #url>
+          <mat-icon matSuffix>link</mat-icon>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          type="button"
+          (click)="download()"
+          color="primary"
+          [disabled]="!editForm.get('url')?.valid"
+          class="download-button w-100">
+            Download
+        </button>
+      </div>
+
+      <!-- NAME -->
+      <mat-form-field class="w-100 pt-2">
         <mat-label>Name</mat-label>
-        <input matInput  value="" class="w-100">
+        <input matInput  formControlName="name" id="name">
+        <mat-icon matSuffix>home</mat-icon>
       </mat-form-field>
-      <mat-form-field class="example-full-width" class="w-100 pt-2">
+
+      <!-- ADDRESS -->
+      <mat-form-field class="w-100 pt-2">
         <mat-label>Address</mat-label>
-        <input matInput value="">
+        <input matInput formControlName="address" id="address">
+        <mat-icon matSuffix>pin_drop</mat-icon>
       </mat-form-field>
-      <mat-form-field class="example-full-width" class="w-100 pt-2">
+
+      <!-- COSTPERMONTH -->
+      <mat-form-field class="w-100 pt-2">
         <mat-label>Cost per month</mat-label>
-        <input matInput value="">
+        <mat-icon matSuffix>euro</mat-icon>
+        <input type="number" matInput formControlName="costPerMonth" id="costPerMonth">
       </mat-form-field>
-      <mat-form-field class="example-full-width" class="w-100 pt-2">
+
+      <!-- DEPOSIT -->
+      <mat-form-field class="w-100 pt-2">
         <mat-label>Deposit</mat-label>
-        <input matInput value="">
+        <mat-icon matSuffix>payments</mat-icon>
+        <input type="number" matInput formControlName="deposit" id="deposit">
       </mat-form-field>
-      <mat-form-field class="example-full-width" class="w-100 pt-2">
+
+      <!-- URL -->
+      <mat-form-field class="w-100 pt-2">
         <mat-label>Mq.</mat-label>
-        <input matInput value="">
+        <input type="number" matInput formControlName="mq" id="mq">
+        <mat-icon matSuffix>straighten</mat-icon>
       </mat-form-field>
     </form>
   </div>
+
   <div class="col-12 d-flex justify-content-end">
-    <button mat-raised-button color="primary" style="margin-right: 1rem;">Save</button>
-    <button mat-raised-button color="accent" (click)="close()">Close</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      style="margin-right: 1rem;"
+      [disabled]="!editForm.valid">
+      Save
+    </button>
+
+    <button
+      mat-raised-button
+      color="accent"
+      type="button"
+      (click)="close()">
+      Close
+    </button>
   </div>
 </div>

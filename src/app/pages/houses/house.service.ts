@@ -7,22 +7,26 @@ import { House, HOUSES } from './house.model';
 })
 export class HouseService {
   houses$ = new BehaviorSubject<House[]>(HOUSES)
-  filterInput$ = new BehaviorSubject<string>('')
+  private _filterInput$ = new BehaviorSubject<string>('')
 
   constructor() {}
 
   //https://youtu.be/Z76QlSpYcck?t=832
   getFilteredStream() {
-    return combineLatest([this.houses$, this.filterInput$]).pipe(
+    return combineLatest([this.houses$, this._filterInput$]).pipe(
       map(([houses, filterInput]) => {
         return houses.filter(house => {
           let allFieldsStr = ''
           for (const [key, value] of Object.entries(house)) {
             allFieldsStr = allFieldsStr + value + ' '
           }
-          return allFieldsStr.indexOf(filterInput) !== -1
+          return allFieldsStr.toLowerCase().indexOf(filterInput.toLowerCase()) !== -1
         })
       })
     )
+  }
+
+  filter(query: string) {
+    this._filterInput$.next(query)
   }
 }
