@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row p-4">
+    <div class="col mat-elevation-z8 rounded-container m-2">
+
+      <!--Table houses-->
+      <div class="row p-2">
+        <div class="col-12">
+          <h2>Houses</h2>
+        </div>
+        <div class="col-12 col-lg-auto">
+          <mat-form-field hintLabel="search all fields" color="accent">
+            <mat-label>Filter</mat-label>
+            <input matInput #input placeholder="Search" type="search" (input)="onChangeFilter()">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-9 pt-3 w-100">
+          <div class="rounded-container">
+            <table mat-table [dataSource]="dataSource" fixedLayout color="primary">
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Address Column-->
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+              </ng-container>
+
+              <!-- Cost Column -->
+              <ng-container matColumnDef="costPerMonth">
+                <th mat-header-cell *matHeaderCellDef> Cost per month </th>
+                <td mat-cell *matCellDef="let element"> {{element.costPerMonth}}€ </td>
+              </ng-container>
+
+              <!-- Deposit Column -->
+              <ng-container matColumnDef="deposit">
+                <th mat-header-cell *matHeaderCellDef> Deposit </th>
+                <td mat-cell *matCellDef="let element"> {{element.deposit}}€ </td>
+              </ng-container>
+
+              <!-- Mq Column -->
+              <ng-container matColumnDef="mq">
+                <th mat-header-cell *matHeaderCellDef> Mq. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mq}} </td>
+              </ng-container>
+
+              <!-- DateCreated -->
+              <ng-container matColumnDef="dateCreated">
+                <th mat-header-cell *matHeaderCellDef> Created. </th>
+                <td mat-cell *matCellDef="let element"> {{element.dateCreated.toLocaleString()}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" [routerLink]="i"></tr>
+            </table>
+
+            <!-- Pagination -->
+            <mat-paginator
+              [length]="(dataSource.data | async)?.length"
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+              aria-label="Select page of houses">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail house-->
+    <div *ngIf="showEditComponent$ | async" class="col-12 col-lg-3 mat-elevation-z8 rounded-container m-2">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
