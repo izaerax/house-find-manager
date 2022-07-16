@@ -15,12 +15,16 @@ import { HouseEditComponent } from './pages/houses/house-list/house-edit/house-e
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BusyComponent } from './shared/busy/busy.component';
+import { httpInterceptorProviders } from './shared/http_interceptors';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HouseListComponent,
-    HouseEditComponent
+    HouseEditComponent,
+    BusyComponent
   ],
   imports: [
     BrowserModule,
@@ -34,10 +38,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

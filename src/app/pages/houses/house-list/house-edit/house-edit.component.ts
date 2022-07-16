@@ -1,9 +1,19 @@
 import { ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, combineLatest } from 'rxjs';
 import { House } from '../../house.model';
 import { HouseService } from '../../house.service';
+
+
+interface HouseFormControls {
+  url: FormControl<string|null>,
+  name: FormControl<string|null>,
+  address: FormControl<string|null>,
+  costPerMonth: FormControl<number|null>,
+  deposit: FormControl<number|null>,
+  mq: FormControl<number|null>
+}
 
 @Component({
   selector: 'app-house-edit',
@@ -13,7 +23,7 @@ import { HouseService } from '../../house.service';
 })
 export class HouseEditComponent implements OnInit {
 
-  editForm!: FormGroup;
+  editForm!: FormGroup<HouseFormControls>;
   house$: Observable<House>;
 
   constructor(
@@ -37,7 +47,8 @@ export class HouseEditComponent implements OnInit {
   }
 
   download() {
-    alert('Download')
+    alert(`Download: ${this.editForm.controls.url.value}`)
+
   }
 
   close() {
@@ -45,24 +56,24 @@ export class HouseEditComponent implements OnInit {
   }
 
   setupForm() {
-    this.editForm = new FormGroup({
-      'url': new FormControl(null, [
+    this.editForm = new FormGroup<HouseFormControls>({
+      'url': new FormControl('', [
         Validators.required,
         this.validateUrl.bind(this)
       ]),
-      'name': new FormControl(null, [
+      'name': new FormControl('', [
         Validators.required
       ]),
-      'address': new FormControl(null, [
+      'address': new FormControl('', [
         Validators.required
       ]),
-      'costPerMonth': new FormControl(null, [
+      'costPerMonth': new FormControl(0, [
         Validators.required,
       ]),
-      'deposit': new FormControl(null, [
+      'deposit': new FormControl(0, [
         Validators.required,
       ]),
-      'mq': new FormControl(null, [
+      'mq': new FormControl(0, [
         Validators.required
       ])
     })
