@@ -46,6 +46,7 @@ export class HouseListComponent {
   }
 
   onChangeFilter() {
+    console.log("CHANGED FILTER", this.filterInput.nativeElement.value)
     this.houseService.filter(this.filterInput.nativeElement.value)
   }
 }

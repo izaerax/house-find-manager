@@ -6,6 +6,10 @@ main {
   display: flex;
 
   section[title="table"] {
+    display: grid;
+    place-items: start;
+    grid-template-columns: 1fr;
+
     padding: 15px;
     background-color: white;
 
@@ -35,4 +39,3 @@ main {
 .mat-row:hover {
   cursor: pointer;
 }
-

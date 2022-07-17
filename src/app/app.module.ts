@@ -24,7 +24,7 @@ import { httpInterceptorProviders } from './shared/http_interceptors';
     HeaderComponent,
     HouseListComponent,
     HouseEditComponent,
-    BusyComponent
+    BusyComponent,
   ],
   imports: [
     BrowserModule,
