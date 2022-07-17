@@ -1,18 +1,36 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+main {
+  padding: 20px;
+  display: flex;
+
+  section[title="table"] {
+    padding: 15px;
+    background-color: white;
+
+    table {
+      width: 100%;
+      background-color: transparent;
+
+      th {
+        text-align: left;
+      }
+    }
+  }
+
+  aside[title="sliders"] {
+    padding: 15px;
+    margin-left: 20px;
+    background-color: white;
+  }
+}
+
 .rounded-container {
   border-radius: 5px;
 }
 
-table {
-  background-color: transparent;
-  width: 100%;
-}
 
-th {
-  text-align: left;
-}
 
 .mat-row:hover {
   cursor: pointer;

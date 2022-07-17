@@ -1,6 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { House, HOUSES } from './house.model';
+
+
+declare var jQuery: any;
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +13,7 @@ export class HouseService {
   houses$ = new BehaviorSubject<House[]>(HOUSES)
   private _filterInput$ = new BehaviorSubject<string>('')
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   //https://youtu.be/Z76QlSpYcck?t=832
   getFilteredStream() {
@@ -28,5 +32,24 @@ export class HouseService {
 
   filter(query: string) {
     this._filterInput$.next(query)
+  }
+
+  fetch(url: string) {
+    const data = {
+      costPerMonth: 0
+    }
+    return this.http.get<string>(url)
+      .pipe(
+        map((htmlString) => {
+          console.log(htmlString)
+          const htmlPage = jQuery(jQuery.parseHTML(htmlString))
+          debugger
+          const costPerMonthElement = htmlPage.find('.listing-detail-summary__price-postfix')
+          if(costPerMonthElement.length){
+            data.costPerMonth = costPerMonthElement.html().split('&')[0]
+          }
+          return data
+        })
+      )
   }
 }

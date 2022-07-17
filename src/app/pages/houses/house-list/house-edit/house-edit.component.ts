@@ -29,7 +29,7 @@ export class HouseEditComponent implements OnInit {
   constructor(
     private router: Router,
     route: ActivatedRoute,
-    houseService: HouseService
+    private houseService: HouseService
   ) {
 
     this.house$ = combineLatest([houseService.houses$, route.paramMap])
@@ -47,8 +47,10 @@ export class HouseEditComponent implements OnInit {
   }
 
   download() {
-    alert(`Download: ${this.editForm.controls.url.value}`)
+    console.log(`Download: ${this.editForm.controls.url.value}`)
 
+    if (this.editForm.controls.url.valid && this.editForm.controls.url.value)
+      this.houseService.fetch(this.editForm.controls.url.value as string).subscribe(val => console.log(val))
   }
 
   close() {

@@ -1,82 +1,84 @@
-<div class="row p-2">
-  <div class="col-12">
+<section name="edit-section">
+
+  <header>
     <h2>Edit</h2>
-  </div>
-  <div class="col-12">
-    <form [formGroup]="editForm">
+  </header>
 
-      <!-- URL -->
-      <div class="position-relative" style="padding-bottom: 35px;">
-        <mat-form-field class="w-100 pt-2">
-          <mat-label>URL</mat-label>
-          <input matInput formControlName="url" id="url" #url>
-          <mat-icon matSuffix>link</mat-icon>
-        </mat-form-field>
+  <form [formGroup]="editForm">
 
-        <button
-          mat-raised-button
-          type="button"
-          (click)="download()"
-          color="primary"
-          [disabled]="!editForm.get('url')?.valid"
-          class="download-button w-100">
-            Download
-        </button>
-      </div>
-
-      <!-- NAME -->
-      <mat-form-field class="w-100 pt-2">
-        <mat-label>Name</mat-label>
-        <input matInput  formControlName="name" id="name">
-        <mat-icon matSuffix>home</mat-icon>
+    <!-- URL -->
+    <fieldset name="url">
+      <mat-form-field>
+        <mat-label>URL</mat-label>
+        <input matInput formControlName="url" id="url">
+        <mat-icon matSuffix>link</mat-icon>
       </mat-form-field>
 
-      <!-- ADDRESS -->
-      <mat-form-field class="w-100 pt-2">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="address" id="address">
-        <mat-icon matSuffix>pin_drop</mat-icon>
-      </mat-form-field>
+      <button
+        mat-raised-button
+        type="button"
+        (click)="download()"
+        color="primary"
+        [disabled]="!editForm.get('url')?.valid"
+        class="download-button">
+          Download
+      </button>
+    </fieldset>
 
-      <!-- COSTPERMONTH -->
-      <mat-form-field class="w-100 pt-2">
-        <mat-label>Cost per month</mat-label>
-        <mat-icon matSuffix>euro</mat-icon>
-        <input type="number" matInput formControlName="costPerMonth" id="costPerMonth">
-      </mat-form-field>
+    <!-- NAME -->
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput  formControlName="name" id="name">
+      <mat-icon matSuffix>home</mat-icon>
+    </mat-form-field>
 
-      <!-- DEPOSIT -->
-      <mat-form-field class="w-100 pt-2">
-        <mat-label>Deposit</mat-label>
-        <mat-icon matSuffix>payments</mat-icon>
-        <input type="number" matInput formControlName="deposit" id="deposit">
-      </mat-form-field>
+    <!-- ADDRESS -->
+    <mat-form-field>
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" id="address">
+      <mat-icon matSuffix>pin_drop</mat-icon>
+    </mat-form-field>
 
-      <!-- URL -->
-      <mat-form-field class="w-100 pt-2">
-        <mat-label>Mq.</mat-label>
-        <input type="number" matInput formControlName="mq" id="mq">
-        <mat-icon matSuffix>straighten</mat-icon>
-      </mat-form-field>
-    </form>
-  </div>
+    <!-- COSTPERMONTH -->
+    <mat-form-field>
+      <mat-label>Cost per month</mat-label>
+      <mat-icon matSuffix>euro</mat-icon>
+      <input type="number" matInput formControlName="costPerMonth" id="costPerMonth">
+    </mat-form-field>
 
-  <div class="col-12 d-flex justify-content-end">
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      style="margin-right: 1rem;"
-      [disabled]="!editForm.valid">
-      Save
-    </button>
+    <!-- DEPOSIT -->
+    <mat-form-field>
+      <mat-label>Deposit</mat-label>
+      <mat-icon matSuffix>payments</mat-icon>
+      <input type="number" matInput formControlName="deposit" id="deposit">
+    </mat-form-field>
 
-    <button
-      mat-raised-button
-      color="accent"
-      type="button"
-      (click)="close()">
-      Close
-    </button>
-  </div>
-</div>
+    <!-- URL -->
+    <mat-form-field>
+      <mat-label>Mq.</mat-label>
+      <input type="number" matInput formControlName="mq" id="mq">
+      <mat-icon matSuffix>straighten</mat-icon>
+    </mat-form-field>
+
+    <!-- actions -->
+    <fieldset name="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="!editForm.valid">
+        Save
+      </button>
+
+      <button
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="close()">
+        Close
+      </button>
+    </fieldset>
+
+  </form>
+
+</section>

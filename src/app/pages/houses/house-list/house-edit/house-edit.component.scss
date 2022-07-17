@@ -1,10 +1,32 @@
-mat-icon {
-  opacity: 0.5;
+
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-width: 300px;
+  mat-icon {
+    opacity: 0.5;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: unset;
+    padding-bottom: 35px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    &[name="actions"] {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+  }
+
 }
 
-.download-button {
-  position: absolute;
-  left: 0px;
-  top: 65px;
-}
 

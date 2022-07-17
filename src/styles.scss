@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+/*
 
+grid: https://www.youtube.com/watch?v=Felq4z_rdPQ&ab_channel=Devoxx
+*/
+
+
+@import "assets/scss/variables";
+@import "~@angular/material/theming";
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: mat-color($accent);
+}

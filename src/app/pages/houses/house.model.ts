@@ -5,6 +5,7 @@ export interface House {
   deposit: number;
   mq: number;
   dateCreated: Date;
+  url?: string
 }
 
 export const HOUSES = [
