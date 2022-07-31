@@ -59,7 +59,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" [routerLink]="i"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" [routerLink]="[i]" routerLinkActive="active"></tr>
     </table>
 
     <!-- Pagination -->
@@ -73,7 +73,7 @@
   </section>
 
   <!-- Sliders -->
-  <aside title="sliders" *ngIf="(showEditComponent$ | async)" class="mat-elevation-z8 rounded-container">
+  <aside title="sliders" *ngIf="showEditComponent" class="mat-elevation-z8 rounded-container">
     <router-outlet></router-outlet>
   </aside>
 

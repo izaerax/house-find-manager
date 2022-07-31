@@ -1,10 +1,11 @@
 import { DataSource } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { map, Observable, filter } from 'rxjs';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { map, Observable, filter} from 'rxjs';
 import { House } from '../house.model';
 import { HouseService } from '../house.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-house-list',
@@ -12,10 +13,11 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./house-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HouseListComponent {
+export class HouseListComponent implements OnDestroy {
+  private subs = new SubSink()
   dataSource: HouseDataSource
   displayedColumns = ['name', 'address', 'costPerMonth', 'deposit', 'mq', 'dateCreated']
-  showEditComponent$!: Observable<boolean>
+  showEditComponent: boolean = false
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -31,10 +33,14 @@ export class HouseListComponent {
     this.dataSource = new HouseDataSource(houseService.getFilteredStream(), this.paginator)
 
     //https://stackoverflow.com/questions/48977775/activatedroute-subscribe-to-first-child-parameters-observer
-    this.showEditComponent$ = this.router.events
+    this.subs.add(this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        map(() => route),
+        filter((event) => {
+          return event instanceof NavigationEnd
+        }),
+        map(() => {
+          return route
+        }),
         map((activeRoute) => {
           if(activeRoute.snapshot.firstChild && activeRoute.snapshot.firstChild.paramMap.get('id') !== null) {
             return true
@@ -42,12 +48,16 @@ export class HouseListComponent {
             return false
           }
         })
-      )
+      ).subscribe((val: boolean) => this.showEditComponent = val))
   }
 
   onChangeFilter() {
     console.log("CHANGED FILTER", this.filterInput.nativeElement.value)
     this.houseService.filter(this.filterInput.nativeElement.value)
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
   }
 }
 

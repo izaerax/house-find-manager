@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
+@import "~src/assets/scss/variables";
+@import "~@angular/material/theming";
 
 main {
   padding: 20px;
@@ -30,11 +30,9 @@ main {
   }
 }
 
-.rounded-container {
-  border-radius: 5px;
+.active {
+  background-color: mat-color($primary-hover, 300);
 }
-
-
 
 .mat-row:hover {
   cursor: pointer;

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/c
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, combineLatest, Subscription } from 'rxjs';
+import { SubSink } from 'subsink';
 import { House } from '../../house.model';
 import { HouseService } from '../../house.service';
 
@@ -22,10 +23,9 @@ interface HouseFormControls {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HouseEditComponent implements OnInit, OnDestroy {
-
+  private subs = new SubSink()
   editForm!: FormGroup<HouseFormControls>;
   house$: Observable<House>;
-  houseSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -35,16 +35,18 @@ export class HouseEditComponent implements OnInit, OnDestroy {
     this.house$ = combineLatest([houseService.houses$, route.paramMap])
       .pipe(
         map(([houses, paramMap]) => {
-          console.log(houses[parseInt(paramMap.get('id') as string)])
-          const house = houses[parseInt(paramMap.get('id') as string)]
+          debugger
+          console.log(houses[filterInt(paramMap.get('id') as string)])
+          const house = houses[filterInt(paramMap.get('id') as string)]
+          if (!house) this.router.navigate(['/not-found'])
           return house
         })
       )
 
     this.setupForm()
-    this.houseSubscription = this.house$.subscribe(house => {
+    this.subs.add(this.house$.subscribe(house => {
       this.setForm(house)
-    })
+    }))
   }
 
   ngOnInit() {
@@ -125,6 +127,16 @@ export class HouseEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.houseSubscription.unsubscribe()
+    this.subs.unsubscribe()
+  }
+}
+
+//used to filter id cause parseInt turns strings like "12d.af-1" in 12
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt#a_stricter_parse_function
+function filterInt(value: string) {
+  if (/^[-+]?(\d+|Infinity)$/.test(value)) {
+    return Number(value)
+  } else {
+    return NaN
   }
 }

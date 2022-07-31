@@ -1,0 +1,32 @@
+
+@import "~src/assets/scss/variables";
+@import "~@angular/material/theming";
+
+main {
+  padding: 20px;
+  display: grid;
+
+  section {
+    background-color: white;
+    display: grid;
+    place-items: center;
+    place-self: center;
+    grid-template-columns: 1fr;
+    // margin: auto;
+    // padding: 0 100px;
+    min-width: 900px;
+
+    h1 {
+      color: mat-color($accent);
+      font: 400 404px Roboto, "Helvetica Neue", sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+    h3 {
+      color: mat-color($primary);
+      font: 400 100px Roboto, "Helvetica Neue", sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+  }
+}

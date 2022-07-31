@@ -14,3 +14,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: mat-color($accent);
 }
+
+.rounded-container {
+  border-radius: 5px;
+}
