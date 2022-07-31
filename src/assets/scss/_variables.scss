@@ -4,6 +4,7 @@
 
 $primary: mat.define-palette(mat.$amber-palette, 500);
 $accent: mat.define-palette(mat.$blue-gray-palette, 900);
+$primary-hover: mat.define-palette(mat.$amber-palette, 900);
 $warn: mat.define-palette(mat.$red-palette);
 
 $light-theme: mat.define-light-theme((
@@ -11,6 +12,9 @@ $light-theme: mat.define-light-theme((
     primary: $primary,
     accent: $accent,
     warn: $warn
+  ),
+  typography: mat.define-typography-config(
+
   )
 ));
 
